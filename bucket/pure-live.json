@@ -1,0 +1,37 @@
+{
+    "version": "3.1.17",
+    "description": "Pure Live - a clean multi-platform live streaming client for Bilibili, Huya, Douyu, Kuaishou, Douyin, NetEase CC, YY, Twitch, SOOP and custom M38 sources.",
+    "homepage": "https://github.com/liuchuancong/pure_live",
+    "license": "AGPL-3.0-only",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/liuchuancong/pure_live/releases/download/v3.1.17/PureLive-3.1.17-4106-windows-x64-portable.zip",
+            "hash": "2f0e1d22ade2a30300f851c9061c6e2ced67dafbd1e954fa2f9e421dcf3afe9f"
+        }
+    },
+    "bin": [
+        [
+            "pure_live.exe",
+            "pure-live"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "pure_live.exe",
+            "Pure Live"
+        ]
+    ],
+    "persist": "AppData",
+    "checkver": {
+        "github": "https://api.github.com/repos/liuchuancong/pure_live/releases/latest",
+        "jsonpath": "$.assets[*].name",
+        "regex": "PureLive-([\\d.]+)-(?<build>\\d+)-windows-x64-portable\\.zip"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/liuchuancong/pure_live/releases/download/v$version/PureLive-$version-$matchBuild-windows-x64-portable.zip"
+            }
+        }
+    }
+}
