@@ -1,53 +1,63 @@
-# scoop-pure-live
+# scoop-bucket-private
 
-[![Tests](https://github.com/John-Tito/scoop-pure-live/actions/workflows/ci.yml/badge.svg)](https://github.com/John-Tito/scoop-pure-live/actions/workflows/ci.yml)
-[![Excavator](https://github.com/John-Tito/scoop-pure-live/actions/workflows/excavator.yml/badge.svg)](https://github.com/John-Tito/scoop-pure-live/actions/workflows/excavator.yml)
+[![CI](https://github.com/John-Tito/scoop-bucket-private/actions/workflows/ci.yml/badge.svg)](https://github.com/John-Tito/scoop-bucket-private/actions/workflows/ci.yml)
+[![Excavator](https://github.com/John-Tito/scoop-bucket-private/actions/workflows/excavator.yml/badge.svg)](https://github.com/John-Tito/scoop-bucket-private/actions/workflows/excavator.yml)
 
-A [Scoop](https://scoop.sh) bucket for **[Pure Live (纯粹直播)](https://github.com/liuchuancong/pure_live)** — a clean
-multi-platform live streaming client for Bilibili, Huya, Douyu, Kuaishou, Douyin, NetEase CC, YY, Twitch, SOOP and
-custom M38 sources.
+个人使用的 [Scoop](https://scoop.sh) bucket，收录我日常需要的 Windows 应用。
 
-## Install
+---
 
-```pwsh
-scoop bucket add pure-live https://github.com/John-Tito/scoop-pure-live
-scoop install pure-live
+## 📦 安装
+
+```powershell
+scoop bucket add private https://github.com/John-Tito/scoop-bucket-private
 ```
 
-Update or uninstall:
+查看本 bucket 收录的应用：
 
-```pwsh
-scoop update pure-live
-scoop uninstall pure-live
+```powershell
+scoop search --bucket private
 ```
 
-## Manifests
+按需安装：
 
-| Manifest                           | Version | Notes                                                                                                |
-| ---------------------------------- | ------- | ---------------------------------------------------------------------------------------------------- |
-| [`pure-live`](bucket/pure-live.json) | 3.1.17  | Windows x64 portable build (`PureLive-<version>-<build>-windows-x64-portable.zip`)                    |
+```powershell
+scoop install private/<app-name>
+```
 
-### 说明 / Notes
+---
 
-- 使用上游官方 **portable** 压缩包，解压即用，不需要运行安装程序。
-- 应用的用户数据位于程序目录下的 `AppData` 文件夹。清单通过 `persist` 将其映射到 Scoop 的 `persist` 目录，
-  因此 `scoop update` 不会丢失配置、订阅源与播放记录。
-- `checkver` / `autoupdate` 会自动跟踪上游新版本。由于下载文件名同时包含版本号和构建号
-  （例如 `3.1.17-4106`），清单通过 GitHub Releases API + JSONPath 同时解析两者，并自动更新 SHA256。
-- Start Menu 快捷方式名称为 **Pure Live**，同时提供 `pure-live` 命令行 shim。
+## 🔄 自动更新
 
-## Auto-update
+本 bucket 使用官方 [ScoopInstaller/GithubActions](https://github.com/ScoopInstaller/GithubActions) 驱动的 **Excavator** 工作流，每 **4 小时** 检查一次上游 Releases。发现新版本后自动更新 manifest 中的 `version`、下载 URL 和 SHA256 哈希。
 
-The [Excavator workflow](.github/workflows/excavator.yml) checks upstream every 4 hours and updates the manifest
-(including the hash) automatically. It can also be triggered manually from the repository's **Actions** tab.
+每个 manifest 都配置了 `checkver` 和 `autoupdate`，无需手动维护版本号。也可在仓库 **Actions** 标签页手动触发 `Excavator`。
 
-## Contributing
+---
 
-Issues and pull requests are welcome. Please read the
-[Contributing Guide](https://github.com/ScoopInstaller/.github/blob/main/.github/CONTRIBUTING.md) and the
-[App Manifests](https://github.com/ScoopInstaller/Scoop/wiki/App-Manifests) wiki page first.
+## ✅ CI
 
-## Credits
+每次 push / PR 会在 **windows-latest** 上运行测试：
 
-- [Pure Live](https://github.com/liuchuancong/pure_live) by [liuchuancong](https://github.com/liuchuancong) — licensed under AGPL-3.0.
-- This bucket is based on the [ScoopInstaller/BucketTemplate](https://github.com/ScoopInstaller/BucketTemplate).
+- PowerShell 语法检查
+- 文件编码与换行规范（UTF-8、CRLF、末尾换行）
+- Manifest JSON Schema 校验
+
+---
+
+## 🤝 贡献
+
+个人 bucket，主要供自己使用。如果发现 manifest 有问题（版本过时、哈希错误、安装失败等），欢迎提 Issue 或 PR。
+
+新 manifest 请从 [`bucket/app-name.json.template`](https://github.com/John-Tito/scoop-bucket-private/blob/main/bucket/app-name.json.template) 开始，并确保通过 CI。
+
+参考文档：
+
+- [Scoop App Manifests Wiki](https://github.com/ScoopInstaller/Scoop/wiki/App-Manifests)
+- [ScoopInstaller/.github CONTRIBUTING](https://github.com/ScoopInstaller/.github/blob/main/.github/CONTRIBUTING.md)
+
+---
+
+## 📄 Credits
+
+基于 [ScoopInstaller/BucketTemplate](https://github.com/ScoopInstaller/BucketTemplate) 构建。各应用的版权与协议归其上游作者所有，详见对应 manifest 的 `license` 与 `homepage` 字段。
