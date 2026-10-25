@@ -1,0 +1,5 @@
+README.md
+.github/workflows/sync.yml
+.templatesyncignore
+bucket/
+bin/auto-pr.ps1
